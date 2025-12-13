@@ -1,4 +1,5 @@
-﻿using GraphqlProject.API.GraphQL.Type;
+﻿using GraphqlProject.API.CommonModel;
+using GraphqlProject.API.GraphQL.Type;
 
 namespace GraphqlProject.API.GraphQL.Model;
 

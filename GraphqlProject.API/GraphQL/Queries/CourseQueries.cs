@@ -1,4 +1,5 @@
 ﻿using Bogus;
+using GraphqlProject.API.CommonModel;
 using GraphqlProject.API.GraphQL.Type;
 using HotChocolate.Language;
 

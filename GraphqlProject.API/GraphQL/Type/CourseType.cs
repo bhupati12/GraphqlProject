@@ -1,4 +1,6 @@
-﻿namespace GraphqlProject.API.GraphQL.Type;
+﻿using GraphqlProject.API.CommonModel;
+
+namespace GraphqlProject.API.GraphQL.Type;
 
 public class CourseType
 {
@@ -12,13 +14,4 @@ public class CourseType
 	public InstructorType Instructor { get; set; }
 
 	public IEnumerable<StudentType> Students { get; set; }
-}
-
-public enum Subject
-{
-	Mathematics = 1,
-	Science = 2,
-	History = 3,
-	Art = 4,
-	Literature = 5
 }

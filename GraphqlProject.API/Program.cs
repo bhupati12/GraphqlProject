@@ -1,6 +1,8 @@
 using GraphqlProject.API.GraphQL.Mutation;
 using GraphqlProject.API.GraphQL.Queries;
+using GraphqlProject.API.Repositories;
 using HotChocolate.Language;
+using Microsoft.EntityFrameworkCore;
 using Scalar.AspNetCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -11,6 +13,10 @@ builder.Services.AddControllers();
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
 
+builder.Services.AddPooledDbContextFactory<SchoolDbContext>(options =>
+{
+	options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
+});
 
 builder.Services.AddGraphQLServer()
 	.AddQueryType(q => q.Name(nameof(OperationType.Query)))
