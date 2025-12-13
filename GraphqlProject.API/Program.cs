@@ -34,6 +34,11 @@ if (app.Environment.IsDevelopment())
 	app.MapScalarApiReference();
 }
 
+using var scope = app.Services.CreateScope();
+var dbcontext = scope.ServiceProvider.GetRequiredService<IDbContextFactory<SchoolDbContext>>();
+var context = dbcontext.CreateDbContext();
+context.Database.Migrate();
+
 app.UseHttpsRedirection();
 
 app.UseAuthorization();

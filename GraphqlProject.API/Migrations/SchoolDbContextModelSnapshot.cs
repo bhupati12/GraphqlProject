@@ -22,6 +22,21 @@ namespace GraphqlProject.API.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
+            modelBuilder.Entity("CourseDTOStudentDTO", b =>
+                {
+                    b.Property<Guid>("CoursesId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("StudentsId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("CoursesId", "StudentsId");
+
+                    b.HasIndex("StudentsId");
+
+                    b.ToTable("CourseDTOStudentDTO");
+                });
+
             modelBuilder.Entity("GraphqlProject.API.DTOs.CourseDTO", b =>
                 {
                     b.Property<Guid>("Id")
@@ -70,9 +85,6 @@ namespace GraphqlProject.API.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid?>("CourseDTOId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<string>("FirstName")
                         .HasColumnType("nvarchar(max)");
 
@@ -84,15 +96,28 @@ namespace GraphqlProject.API.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CourseDTOId");
-
                     b.ToTable("Students");
+                });
+
+            modelBuilder.Entity("CourseDTOStudentDTO", b =>
+                {
+                    b.HasOne("GraphqlProject.API.DTOs.CourseDTO", null)
+                        .WithMany()
+                        .HasForeignKey("CoursesId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("GraphqlProject.API.DTOs.StudentDTO", null)
+                        .WithMany()
+                        .HasForeignKey("StudentsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("GraphqlProject.API.DTOs.CourseDTO", b =>
                 {
                     b.HasOne("GraphqlProject.API.DTOs.InstructorDTO", "Instructor")
-                        .WithMany()
+                        .WithMany("Courses")
                         .HasForeignKey("InstructorId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -100,16 +125,9 @@ namespace GraphqlProject.API.Migrations
                     b.Navigation("Instructor");
                 });
 
-            modelBuilder.Entity("GraphqlProject.API.DTOs.StudentDTO", b =>
+            modelBuilder.Entity("GraphqlProject.API.DTOs.InstructorDTO", b =>
                 {
-                    b.HasOne("GraphqlProject.API.DTOs.CourseDTO", null)
-                        .WithMany("Students")
-                        .HasForeignKey("CourseDTOId");
-                });
-
-            modelBuilder.Entity("GraphqlProject.API.DTOs.CourseDTO", b =>
-                {
-                    b.Navigation("Students");
+                    b.Navigation("Courses");
                 });
 #pragma warning restore 612, 618
         }

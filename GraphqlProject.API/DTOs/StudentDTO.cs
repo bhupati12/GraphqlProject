@@ -9,4 +9,6 @@ public class StudentDTO
 	public string LastName { get; set; }
 
 	public double GPA { get; set; }
+
+	public IEnumerable<CourseDTO> Courses { get; set; }
 }
