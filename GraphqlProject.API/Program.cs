@@ -1,3 +1,4 @@
+using GraphqlProject.API.DataLoader;
 using GraphqlProject.API.GraphQL.Mutation;
 using GraphqlProject.API.GraphQL.Queries;
 using GraphqlProject.API.Repositories;
@@ -23,7 +24,11 @@ builder.Services.AddGraphQLServer()
 	.AddMutationType(q => q.Name(nameof(OperationType.Mutation)))
 	.AddTypeExtension<ProductQueries>()
 	.AddTypeExtension<CourseQueries>()
-	.AddTypeExtension<CourseMutation>();
+	.AddTypeExtension<CourseMutation>()
+	.AddDataLoader<InstructorDataLoader>();
+
+builder.Services.AddScoped<CourseRepository>();
+builder.Services.AddScoped<InstructorRepository>();
 
 var app = builder.Build();
 
