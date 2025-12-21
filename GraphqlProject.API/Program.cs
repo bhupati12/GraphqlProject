@@ -27,7 +27,8 @@ builder.Services.AddGraphQLServer()
 	.AddTypeExtension<CourseQueries>()
 	.AddTypeExtension<CourseMutation>()
 	.AddTypeExtension<CourseTypeResolver>()
-	.AddDataLoader<InstructorDataLoader>();
+	.AddDataLoader<InstructorDataLoader>()
+	.RegisterDbContextFactory<SchoolDbContext>();
 
 builder.Services.AddScoped<CourseRepository>();
 builder.Services.AddScoped<InstructorRepository>();

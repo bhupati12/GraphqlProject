@@ -1,12 +1,14 @@
-﻿using GraphqlProject.API.GraphQL.Type;
+using GraphqlProject.API.GraphQL.Type;
 using GraphqlProject.API.Repositories;
 using HotChocolate.Language;
+using Microsoft.EntityFrameworkCore;
 
 namespace GraphqlProject.API.GraphQL.Queries;
 
 [ExtendObjectType(OperationType.Query)]
 public class CourseQueries
 {
+	[UsePaging(IncludeTotalCount = true, DefaultPageSize = 10)]
 	public async Task<IEnumerable<CourseType>> GetCourses([Service] CourseRepository courseRepository, CancellationToken cancellationToken)
 	{
 		var courses = await courseRepository.GetAll(cancellationToken);
@@ -18,6 +20,18 @@ public class CourseQueries
 			Subject = x.Subject,
 			InstructorId = x.InstructorId
 		})];
+	}
+
+	[UsePaging(IncludeTotalCount = true, DefaultPageSize = 10)]
+	public IQueryable<CourseType> GetPaginatedCourses(SchoolDbContext context)
+	{
+		return context.Courses.AsNoTracking().Select(x => new CourseType
+		{
+			Id = x.Id,
+			Name = x.Name,
+			Subject = x.Subject,
+			InstructorId = x.InstructorId
+		});
 	}
 
 	public async Task<CourseType> GetCourse(Guid id, [Service] CourseRepository courseRepository, CancellationToken cancellationToken)
