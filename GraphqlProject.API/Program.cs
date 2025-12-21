@@ -1,6 +1,7 @@
 using GraphqlProject.API.DataLoader;
 using GraphqlProject.API.GraphQL.Mutation;
 using GraphqlProject.API.GraphQL.Queries;
+using GraphqlProject.API.GraphQL.Type;
 using GraphqlProject.API.Repositories;
 using HotChocolate.Language;
 using Microsoft.EntityFrameworkCore;
@@ -25,6 +26,7 @@ builder.Services.AddGraphQLServer()
 	.AddTypeExtension<ProductQueries>()
 	.AddTypeExtension<CourseQueries>()
 	.AddTypeExtension<CourseMutation>()
+	.AddTypeExtension<CourseTypeResolver>()
 	.AddDataLoader<InstructorDataLoader>();
 
 builder.Services.AddScoped<CourseRepository>();
