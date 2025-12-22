@@ -1,4 +1,4 @@
-using GraphqlProject.API.DataLoader;
+using GraphqlProject.API.GraphQL.DataLoaders;
 using GraphqlProject.API.GraphQL.Mutation;
 using GraphqlProject.API.GraphQL.Queries;
 using GraphqlProject.API.GraphQL.Type;
@@ -27,7 +27,10 @@ builder.Services.AddGraphQLServer()
 	.AddTypeExtension<CourseQueries>()
 	.AddTypeExtension<CourseMutation>()
 	.AddTypeExtension<CourseTypeResolver>()
-	.AddDataLoader<InstructorDataLoader>()
+	.AddDataLoader<CourseDataLoaderType>()
+	.AddSorting()
+	.AddFiltering()
+	.AddProjections()
 	.RegisterDbContextFactory<SchoolDbContext>();
 
 builder.Services.AddScoped<CourseRepository>();

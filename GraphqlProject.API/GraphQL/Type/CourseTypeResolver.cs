@@ -1,4 +1,4 @@
-﻿using GraphqlProject.API.DataLoader;
+﻿using GraphqlProject.API.GraphQL.DataLoaders;
 
 namespace GraphqlProject.API.GraphQL.Type;
 
@@ -6,9 +6,9 @@ namespace GraphqlProject.API.GraphQL.Type;
 public class CourseTypeResolver
 {
 	[GraphQLNonNullType]
-	public async Task<InstructorType> Instructor([Parent] CourseType course, InstructorDataLoader instructorDataLoader, CancellationToken cancellationToken)
+	public async Task<InstructorType> Instructor([Parent] CourseType course, CourseDataLoaderType courseDataLoaderType, CancellationToken cancellationToken)
 	{
-		var instructor = await instructorDataLoader.LoadAsync(course.InstructorId, cancellationToken);
+		var instructor = await courseDataLoaderType.LoadAsync(course.InstructorId, cancellationToken);
 
 		return new InstructorType
 		{

@@ -1,3 +1,5 @@
+using GraphqlProject.API.GraphQL.Filters;
+using GraphqlProject.API.GraphQL.Sorters;
 using GraphqlProject.API.GraphQL.Type;
 using GraphqlProject.API.Repositories;
 using HotChocolate.Language;
@@ -23,15 +25,20 @@ public class CourseQueries
 	}
 
 	[UsePaging(IncludeTotalCount = true, DefaultPageSize = 10)]
+	//[UseProjection]
+	[UseFiltering(typeof(CourseFilterType))]
+	[UseSorting(typeof(CourseSortType))]
 	public IQueryable<CourseType> GetPaginatedCourses(SchoolDbContext context)
 	{
-		return context.Courses.AsNoTracking().Select(x => new CourseType
+		var result =  context.Courses.AsNoTracking().Select(x => new CourseType
 		{
 			Id = x.Id,
 			Name = x.Name,
 			Subject = x.Subject,
 			InstructorId = x.InstructorId
 		});
+
+		return result;
 	}
 
 	public async Task<CourseType> GetCourse(Guid id, [Service] CourseRepository courseRepository, CancellationToken cancellationToken)

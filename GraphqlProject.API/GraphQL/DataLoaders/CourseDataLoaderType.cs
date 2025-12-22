@@ -1,13 +1,13 @@
 ﻿using GraphqlProject.API.DTOs;
 using GraphqlProject.API.Repositories;
 
-namespace GraphqlProject.API.DataLoader;
+namespace GraphqlProject.API.GraphQL.DataLoaders;
 
-public class InstructorDataLoader : BatchDataLoader<Guid, InstructorDTO>
+public class CourseDataLoaderType : BatchDataLoader<Guid, InstructorDTO>
 {
 	private readonly InstructorRepository _instructorRepository;
 
-	public InstructorDataLoader(IBatchScheduler batchScheduler, DataLoaderOptions options, InstructorRepository instructorRepository) : base(batchScheduler, options)
+	public CourseDataLoaderType(IBatchScheduler batchScheduler, DataLoaderOptions options, InstructorRepository instructorRepository) : base(batchScheduler, options)
 	{
 		_instructorRepository = instructorRepository;
 	}
