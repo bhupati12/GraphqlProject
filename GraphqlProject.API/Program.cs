@@ -31,7 +31,12 @@ builder.Services.AddGraphQLServer()
 	.AddSorting()
 	.AddFiltering()
 	.AddProjections()
-	.RegisterDbContextFactory<SchoolDbContext>();
+	.AddAuthorization()
+	.RegisterDbContextFactory<SchoolDbContext>()
+	.ModifyCostOptions(opt =>
+	{
+		opt.EnforceCostLimits = false;
+	});
 
 builder.Services.AddScoped<CourseRepository>();
 builder.Services.AddScoped<InstructorRepository>();

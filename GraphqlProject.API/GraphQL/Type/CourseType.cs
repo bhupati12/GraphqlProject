@@ -10,6 +10,7 @@ public class CourseType
 
 	public Subject Subject { get; set; }
 
+	[IsProjected(true)]
 	public Guid InstructorId { get; set; }
 
 	public IEnumerable<StudentType> Students { get; set; }
